@@ -31,10 +31,14 @@ RED_SPACESHIP_IMAGE = pygame.image.load(
 RED_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(
     RED_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 270)
 
+SPACE = pygame.transform.scale(pygame.image.load(
+    os.path.join('Assets', 'space.png')), (WIDTH, HEIGHT))
+
+
 # Functions
 def draw_window(red, yellow, red_bullets, yellow_bullets):
+    WIN.blit(SPACE, (0, 0))
     # Fill the screen first
-    WIN.fill(WHITE)
     pygame.draw.rect(WIN, BLACK, BORDER)
     # And then render whatever should be on top
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
@@ -77,11 +81,15 @@ def handle_bullets(yellow_bullets, red_bullets, yellow, red):
         if red.colliderect(bullet):
             pygame.event.post(pygame.event.Event(RED_HIT))
             yellow_bullets.remove(bullet)
+        elif bullet.x > WIDTH:
+            yellow_bullets.remove(bullet)
 
     for bullet in red_bullets:
         bullet.x -= BULLET_VEL
         if yellow.colliderect(bullet):
             pygame.event.post(pygame.event.Event(YELLOW_HIT))
+            red_bullets.remove(bullet)
+        elif bullet.x < 0:
             red_bullets.remove(bullet)
 
 
