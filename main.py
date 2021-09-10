@@ -162,6 +162,7 @@ def main():
 
         if winner_text != "":
             draw_winner(winner_text)  # Someone won
+            break
 
         keys_pressed = pygame.key.get_pressed()
         yellow_handle_movement(keys_pressed, yellow)
