@@ -1,26 +1,26 @@
 import pygame
 import os
 
+# Game setup
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("First Game!")
 
+# Variables
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (255,0,0)
+RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-
 BORDER = pygame.Rect(WIDTH//2 - 5, 0, 10, HEIGHT)
-
 FPS = 60
 VEL = 5
 BULLET_VEL = 7
 MAX_BULLETS = 3
-SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55,40
-
+SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55, 40
 YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
 
+# Assets
 YELLOW_SPACESHIP_IMAGE = pygame.image.load(
     os.path.join('Assets', 'spaceship_yellow.png'))
 YELLOW_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(
@@ -31,6 +31,7 @@ RED_SPACESHIP_IMAGE = pygame.image.load(
 RED_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(
     RED_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 270)
 
+# Functions
 def draw_window(red, yellow, red_bullets, yellow_bullets):
     # Fill the screen first
     WIN.fill(WHITE)
@@ -47,6 +48,7 @@ def draw_window(red, yellow, red_bullets, yellow_bullets):
 
     pygame.display.update()
 
+
 def yellow_handle_movement(keys_pressed, yellow):
     if keys_pressed[pygame.K_a] and yellow.x - VEL > 0:  # Left
         yellow.x -= VEL
@@ -57,6 +59,7 @@ def yellow_handle_movement(keys_pressed, yellow):
     if keys_pressed[pygame.K_s] and yellow.y + VEL + yellow.height < HEIGHT - 15:  # Down
         yellow.y += VEL
 
+
 def red_handle_movement(keys_pressed, red):
     if keys_pressed[pygame.K_LEFT] and red.x - VEL > BORDER.x + BORDER.width:  # Left
         red.x -= VEL
@@ -66,6 +69,7 @@ def red_handle_movement(keys_pressed, red):
         red.y -= VEL
     if keys_pressed[pygame.K_DOWN] and red.y + VEL + red.height < HEIGHT - 15:  # Down
         red.y += VEL
+
 
 def handle_bullets(yellow_bullets, red_bullets, yellow, red):
     for bullet in yellow_bullets:
@@ -114,6 +118,7 @@ def main():
         draw_window(red, yellow, red_bullets, yellow_bullets)
 
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()
